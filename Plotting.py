@@ -1,7 +1,7 @@
 ## plotting functions for decombinator called
 ## by decombinator_v2.py when withplots == True
 
-def plot_v_usage( handle, chain, savefilename="Vusage", order="frequency"):
+def plot_v_usage( handle, chain, species, savefilename="Vusage"):
 
     ## PLOTS V GENE USAGE BASED ON A FILE OF CLASSIFIERS
     
@@ -10,260 +10,206 @@ def plot_v_usage( handle, chain, savefilename="Vusage", order="frequency"):
     import string
     import decimal as dec
     from operator import itemgetter, attrgetter
-
+    
+    if species == 'human':
+        
+        tags_va = open("humantags_trav.txt", "rU")
+        num_genes_va = 0
+        gene_list_va = []
+        for line in tags_va:
+            num_genes_va += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_va.append(x)
+        tags_va.close()
+        
+        tags_vb = open("humantags_trbv.txt", "rU")
+        num_genes_vb = 0
+        gene_list_vb = []
+        for line in tags_vb:
+            num_genes_vb += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_vb.append(x)
+        tags_vb.close()
+        
+        tags_vg = open("humantags_trgv.txt", "rU")
+        num_genes_vg = 0
+        gene_list_vg = []
+        for line in tags_vg:
+            num_genes_vg += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_vg.append(x)
+        tags_vg.close()
+        
+        tags_vd = open("humantags_trdv.txt", "rU")
+        num_genes_vd = 0
+        gene_list_vd = []
+        for line in tags_vd:
+            num_genes_vd += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_vd.append(x)
+        tags_vd.close()
+            
+    elif species == 'mouse':
+        
+        tags_va = open("mousetags_trav.txt", "rU")
+        num_genes_va = 0
+        gene_list_va = []
+        for line in tags_va:
+            num_genes_va += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_va.append(x)
+        tags_va.close()
+        
+        tags_vb = open("mousetags_trbv.txt", "rU")
+        num_genes_vb = 0
+        gene_list_vb = []
+        for line in tags_vb:
+            num_genes_vb += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_vb.append(x)
+        tags_vb.close()
+        
+        tags_vg = open("mousetags_trgv.txt", "rU")
+        num_genes_vg = 0
+        gene_list_vg = []
+        for line in tags_vg:
+            num_genes_vg += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_vg.append(x)
+        tags_vg.close()
+        
+        tags_vd = open("mousetags_trdv.txt", "rU")
+        num_genes_vd = 0
+        gene_list_vd = []
+        for line in tags_vd:
+            num_genes_vd += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_vd.append(x)
+        tags_vd.close()
+        
     if chain=="alpha":
-        tags = open("tags_trav.txt", "rU")
-        num_genes = 0
-        for line in tags:
-            num_genes += 1
 
-        freq_vector_v = [0]*num_genes
+        freq_vector_v = [0]*num_genes_va
         for line in handle:
             elements = line.rstrip("\n")
             freq_vector_v[int(elements.split(',')[0])] += 1
-
-        if order=="frequency":        
-            plt.rcParams['figure.figsize'] = 10,10
-            total = sum(freq_vector_v)
-            percent_usage_v = [0]*num_genes
-            for i in range(num_genes):
-                percent_usage_v[i] = dec.Decimal(freq_vector_v[i]) / dec.Decimal(total)
-            gene_list_v = ('V1-1','V1-2','V10','V12-1','V12-2','V12-3','V13-1','V13-2','V14/D4','V16','V17','V18','V19','V2','V20','V21','V22','V23/D6','V24','V25','V26-1','V26-2','V27','V29/DV5','V3','V30','V34','V35','V36/DV7','V38-1','V38-2/DV8','V39','V4','V40','V41','V5','V6','V7','V8-1','V8-2/8-4','V8-3','V8-6','V9-1','V9-2','DV1','DV2','DV3')
-            v_linked = [0]*len(percent_usage_v)
-            for i in range(len(percent_usage_v)):
-                v_linked[i] = (gene_list_v[i], percent_usage_v[i])
-            sorted_v = sorted(v_linked, key=itemgetter(1))
-            v_labels = [0]*len(sorted_v)
-            v_percents = [0]*len(sorted_v)
-            for j in range(len(sorted_v)):
-                v_labels[j] = sorted_v[j][0]
-                v_percents[j] = sorted_v[j][1]
-            pos_v = np.arange(num_genes)+ 1
-            plt.figure()
-            plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
-            plt.yticks( pos_v, v_labels)
-            plt.xlabel('Frequency Usage')
-            plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
-            plt.grid(True)
-            plt.savefig(str(savefilename)+'.png', dpi=300)
+      
+        plt.rcParams['figure.figsize'] = 10,10
+        total = sum(freq_vector_v)
+        percent_usage_v = [0]*num_genes_va
+        for i in range(num_genes_va):
+            percent_usage_v[i] = dec.Decimal(freq_vector_v[i]) / dec.Decimal(total)
+        v_linked = [0]*len(percent_usage_v)
+        for i in range(len(percent_usage_v)):
+            v_linked[i] = (gene_list_va[i], percent_usage_v[i])
+        sorted_v = sorted(v_linked, key=itemgetter(1))
+        v_labels = [0]*len(sorted_v)
+        v_percents = [0]*len(sorted_v)
+        for j in range(len(sorted_v)):
+            v_labels[j] = sorted_v[j][0]
+            v_percents[j] = sorted_v[j][1]
+        pos_v = np.arange(num_genes_va)+ 1
+        plt.figure()
+        plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
+        plt.yticks( pos_v, v_labels)
+        plt.xlabel('Frequency Usage')
+        plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
+        plt.grid(True)
+        plt.savefig(str(savefilename)+'.png', dpi=300)
             
-        elif order=="chromosome":
-            total = sum(freq_vector_v)
-            fv = [0]*num_genes
-            for i in range(num_genes):
-                fv[i] = dec.Decimal(freq_vector_v[i]) / dec.Decimal(total)
-            gene_list_v = ('V1-1','V1-2','V10','V12-1','V12-2','V12-3','V13-1','V13-2','V14/D4','V16','V17','V18','V19','V2','V20','V21','V22','V23/D6','V24','V25','V26-1','V26-2','V27','V29/DV5','V3','V30','V34','V35','V36/DV7','V38-1','V38-2/DV8','V39','V4','V40','V41','V5','V6','V7','V8-1','V8-2/8-4','V8-3','V8-6','V9-1','V9-2','DV1','DV2','DV3')
-            chromosome_order = [0,1,13,24,32,35,36,37,38,42,2,3,39,40,6,4,7,8,43,5,41,9,10,11,12,14,15,16,17,44,18,19,20,22,23,25,21,26,27,28,29,30,31,33,34,45,46]
-            gene_list_v = [ gene_list_v[i] for i in chromosome_order]
-            fv = [fv[i] for i in chromosome_order]
-
-            ind = np.arange(num_genes)
-            width = 0.25
-
-            fig = plt.figure()
-            ax = fig.add_subplot(111)
-            rects1 = ax.bar(ind, fv, width, color='yellow')
-
-            ax.set_ylabel('Frequency', fontsize = 8)
-            ax.set_xticks(ind+1*width)
-            ax.set_xticklabels(gene_list_v)
-            plt.setp(ax.get_xticklabels(),rotation='vertical',fontsize = 6)
-            plt.setp(ax.get_yticklabels(),rotation='horizontal',fontsize = 6)
-            plt.grid(True)
-
-            plt.savefig(str(savefilename)+'.png', dpi=300)
-
     if chain=="beta":
-        tags = open("tags_trbv.txt", "rU")
-        num_genes = 0
-        for line in tags:
-            num_genes += 1
 
-        freq_vector_v = [0]*num_genes
+        freq_vector_v = [0]*num_genes_vb
         for line in handle:
             elements = line.rstrip("\n")
             freq_vector_v[int(elements.split(',')[0])] += 1
-
-        if order=="frequency":        
-            plt.rcParams['figure.figsize'] = 10,10
-            total = sum(freq_vector_v)
-            percent_usage_v = [0]*num_genes
-            for i in range(num_genes):
-                percent_usage_v[i] = dec.Decimal(freq_vector_v[i]) / dec.Decimal(total)
-            gene_list_v = ('V10-1','V10-2','V10-3','V11-1','V11-2','V11-3','V12-3/V12-4','V12-5','V13','V14','V15','V16','V18','V19','V2','V20-1','V24-1','V25-1','V27-1','V28-1','V29-1','V3-1','V30-1','V4-1','V4-2','V4-3','V5-1','V5-4','V5-5','V5-6','V5-8','V6-1','V6-4','V6-5','V6-6','V6-8','V6-9','V7-2','V7-3','V7-4','V7-6','V7-7','V7-8','V7-9','V9')
-            v_linked = [0]*len(percent_usage_v)
-            for i in range(len(percent_usage_v)):
-                v_linked[i] = (gene_list_v[i], percent_usage_v[i])
-            sorted_v = sorted(v_linked, key=itemgetter(1))
-            v_labels = [0]*len(sorted_v)
-            v_percents = [0]*len(sorted_v)
-            for j in range(len(sorted_v)):
-                v_labels[j] = sorted_v[j][0]
-                v_percents[j] = sorted_v[j][1]
-            pos_v = np.arange(num_genes)+ 1
-            plt.figure()
-            plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
-            plt.yticks( pos_v, v_labels)
-            plt.xlabel('Frequency Usage')
-            plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
-            plt.grid(True)
-            plt.savefig(str(savefilename)+'.png', dpi=300)
             
-        elif order=="chromosome":
-            total = sum(freq_vector_v)
-            fv = [0]*num_genes
-            for i in range(num_genes):
-                fv[i] = dec.Decimal(freq_vector_v[i]) / dec.Decimal(total)
-            gene_list_v = ('V10-1','V10-2','V10-3','V11-1','V11-2','V11-3','V12-3/V12-4','V12-5','V13','V14','V15','V16','V18','V19','V2','V20-1','V24-1','V25-1','V27-1','V28-1','V29-1','V3-1','V30-1','V4-1','V4-2','V4-3','V5-1','V5-4','V5-5','V5-6','V5-8','V6-1','V6-4','V6-5','V6-6','V6-8','V6-9','V7-2','V7-3','V7-4','V7-6','V7-7','V7-8','V7-9','V9')
-            chromosome_order = [ 14, 21, 23, 26, 31, 24, 25, 37, 32, 38, 44, 0, 3, 1, 4, 33, 39, 27, 34, 28, 40, 29, 35, 41, 36, 42, 30, 43, 8, 2, 5, 6, 7, 9, 10, 11, 12, 13, 15, 16, 17, 18, 19, 20, 22 ]
-            gene_list_v = [ gene_list_v[i] for i in chromosome_order]
-            fv = [fv[i] for i in chromosome_order]
-
-            ind = np.arange(num_genes)
-            width = 0.25
-
-            fig = plt.figure()
-            ax = fig.add_subplot(111)
-            rects1 = ax.bar(ind, fv, width, color='yellow')
-
-            ax.set_ylabel('Frequency', fontsize = 10)
-            ax.set_xticks(ind+1*width)
-            ax.set_xticklabels(gene_list_v)
-            plt.setp(ax.get_xticklabels(),rotation='vertical',fontsize = 6)
-            plt.setp(ax.get_yticklabels(),rotation='horizontal',fontsize = 6)
-            plt.grid(True)
-
-            plt.savefig(str(savefilename)+'.png', dpi=300)
+        plt.rcParams['figure.figsize'] = 10,10
+        total = sum(freq_vector_v)
+        percent_usage_v = [0]*num_genes_vb
+        for i in range(num_genes_vb):
+            percent_usage_v[i] = dec.Decimal(freq_vector_v[i]) / dec.Decimal(total)
+        v_linked = [0]*len(percent_usage_v)
+        for i in range(len(percent_usage_v)):
+            v_linked[i] = (gene_list_vb[i], percent_usage_v[i])
+        sorted_v = sorted(v_linked, key=itemgetter(1))
+        v_labels = [0]*len(sorted_v)
+        v_percents = [0]*len(sorted_v)
+        for j in range(len(sorted_v)):
+            v_labels[j] = sorted_v[j][0]
+            v_percents[j] = sorted_v[j][1]
+        pos_v = np.arange(num_genes_vb)+ 1
+        plt.figure()
+        plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
+        plt.yticks( pos_v, v_labels)
+        plt.xlabel('Frequency Usage')
+        plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
+        plt.grid(True)
+        plt.savefig(str(savefilename)+'.png', dpi=300)
 
     if chain=="gamma":
-        tags = open("tags_trgv.txt", "rU")
-        num_genes = 0
-        for line in tags:
-            num_genes += 1
 
-        freq_vector_v = [0]*num_genes
+        freq_vector_v = [0]*num_genes_vg
         for line in handle:
             elements = line.rstrip("\n")
             freq_vector_v[int(elements.split(',')[0])] += 1
-
-        if order=="frequency":        
-            plt.rcParams['figure.figsize'] = 10,10
-            total = sum(freq_vector_v)
-            percent_usage_v = [0]*num_genes
-            for i in range(num_genes):
-                percent_usage_v[i] = dec.Decimal(freq_vector_v[i]) / dec.Decimal(total)
-            gene_list_v = ('V2','V3','V4','V5','V8','V9')
-            v_linked = [0]*len(percent_usage_v)
-            for i in range(len(percent_usage_v)):
-                v_linked[i] = (gene_list_v[i], percent_usage_v[i])
-            sorted_v = sorted(v_linked, key=itemgetter(1))
-            v_labels = [0]*len(sorted_v)
-            v_percents = [0]*len(sorted_v)
-            for j in range(len(sorted_v)):
-                v_labels[j] = sorted_v[j][0]
-                v_percents[j] = sorted_v[j][1]
-            pos_v = np.arange(num_genes)+ 1
-            plt.figure()
-            plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
-            plt.yticks( pos_v, v_labels)
-            plt.xlabel('Frequency Usage')
-            plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
-            plt.grid(True)
-            plt.savefig(str(savefilename)+'.png', dpi=300)
-            
-        elif order=="chromosome":
-            total = sum(freq_vector_v)
-            fv = [0]*num_genes
-            for i in range(num_genes):
-                fv[i] = dec.Decimal(freq_vector_v[i]) / dec.Decimal(total)
-            gene_list_v = ('V2','V3','V4','V5','V8','V9')
-            chromosome_order = [0,1,2,3,4,5]
-            gene_list_v = [ gene_list_v[i] for i in chromosome_order]
-            fv = [fv[i] for i in chromosome_order]
-
-            ind = np.arange(num_genes)
-            width = 0.25
-
-            fig = plt.figure()
-            ax = fig.add_subplot(111)
-            rects1 = ax.bar(ind, fv, width, color='yellow')
-
-            ax.set_ylabel('Frequency', fontsize = 10)
-            ax.set_xticks(ind+1*width)
-            ax.set_xticklabels(gene_list_v)
-            plt.setp(ax.get_xticklabels(),rotation='vertical',fontsize = 6)
-            plt.setp(ax.get_yticklabels(),rotation='horizontal',fontsize = 6)
-            plt.grid(True)
-
-            plt.savefig(str(savefilename)+'.png', dpi=300)
+ 
+        plt.rcParams['figure.figsize'] = 10,10
+        total = sum(freq_vector_v)
+        percent_usage_v = [0]*num_genes_vg
+        for i in range(num_genes_vg):
+            percent_usage_v[i] = dec.Decimal(freq_vector_v[i]) / dec.Decimal(total)
+        v_linked = [0]*len(percent_usage_v)
+        for i in range(len(percent_usage_v)):
+            v_linked[i] = (gene_list_vg[i], percent_usage_v[i])
+        sorted_v = sorted(v_linked, key=itemgetter(1))
+        v_labels = [0]*len(sorted_v)
+        v_percents = [0]*len(sorted_v)
+        for j in range(len(sorted_v)):
+            v_labels[j] = sorted_v[j][0]
+            v_percents[j] = sorted_v[j][1]
+        pos_v = np.arange(num_genes_vg)+ 1
+        plt.figure()
+        plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
+        plt.yticks( pos_v, v_labels)
+        plt.xlabel('Frequency Usage')
+        plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
+        plt.grid(True)
+        plt.savefig(str(savefilename)+'.png', dpi=300)
 
     if chain=="delta":
-        tags = open("tags_trdv.txt", "rU")
-        num_genes = 0
-        for line in tags:
-            num_genes += 1
 
-        freq_vector_v = [0]*num_genes
+        freq_vector_v = [0]*num_genes_vd
         for line in handle:
             elements = line.rstrip("\n")
             freq_vector_v[int(elements.split(',')[0])] += 1
-
-        if order=="frequency":        
-            plt.rcParams['figure.figsize'] = 10,10
-            total = sum(freq_vector_v)
-            percent_usage_v = [0]*num_genes
-            for i in range(num_genes):
-                percent_usage_v[i] = dec.Decimal(freq_vector_v[i]) / dec.Decimal(total)
-            gene_list_v = ('V1','V2','V3','V4','V5','V6','V7','V8')
-            v_linked = [0]*len(percent_usage_v)
-            for i in range(len(percent_usage_v)):
-                v_linked[i] = (gene_list_v[i], percent_usage_v[i])
-            sorted_v = sorted(v_linked, key=itemgetter(1))
-            v_labels = [0]*len(sorted_v)
-            v_percents = [0]*len(sorted_v)
-            for j in range(len(sorted_v)):
-                v_labels[j] = sorted_v[j][0]
-                v_percents[j] = sorted_v[j][1]
-            pos_v = np.arange(num_genes)+ 1
-            plt.figure()
-            plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
-            plt.yticks( pos_v, v_labels)
-            plt.xlabel('Frequency Usage')
-            plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
-            plt.grid(True)
-            plt.savefig(str(savefilename)+'.png', dpi=300)
-
-        elif order=="chromosome":
-            total = sum(freq_vector_v)
-            fv = [0]*num_genes
-            for i in range(num_genes):
-                fv[i] = dec.Decimal(freq_vector_v[i]) / dec.Decimal(total)
-            gene_list_v = ('V1','V2','V3','V4','V5','V6','V7','V8')
-            chromosome_order = [ 3, 5, 0, 4, 6, 7, 1, 2 ]
-            gene_list_v = [ gene_list_v[i] for i in chromosome_order]
-            fv = [fv[i] for i in chromosome_order]
-
-            ind = np.arange(num_genes)
-            width = 0.25
-
-            fig = plt.figure()
-            ax = fig.add_subplot(111)
-            rects1 = ax.bar(ind, fv, width, color='yellow')
-
-            ax.set_ylabel('Frequency', fontsize = 10)
-            ax.set_xticks(ind+1*width)
-            ax.set_xticklabels(gene_list_v)
-            plt.setp(ax.get_xticklabels(),rotation='vertical',fontsize = 6)
-            plt.setp(ax.get_yticklabels(),rotation='horizontal',fontsize = 6)
-            plt.grid(True)
-
-            plt.savefig(str(savefilename)+'.png', dpi=300)
+       
+        plt.rcParams['figure.figsize'] = 10,10
+        total = sum(freq_vector_v)
+        percent_usage_v = [0]*num_genes_vd
+        for i in range(num_genes_vd):
+            percent_usage_v[i] = dec.Decimal(freq_vector_v[i]) / dec.Decimal(total)
+        v_linked = [0]*len(percent_usage_v)
+        for i in range(len(percent_usage_v)):
+            v_linked[i] = (gene_list_vd[i], percent_usage_v[i])
+        sorted_v = sorted(v_linked, key=itemgetter(1))
+        v_labels = [0]*len(sorted_v)
+        v_percents = [0]*len(sorted_v)
+        for j in range(len(sorted_v)):
+            v_labels[j] = sorted_v[j][0]
+            v_percents[j] = sorted_v[j][1]
+        pos_v = np.arange(num_genes_vd)+ 1
+        plt.figure()
+        plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
+        plt.yticks( pos_v, v_labels)
+        plt.xlabel('Frequency Usage')
+        plt.barh( pos_v, v_percents, align = 'center', color = 'yellow', height=0.2)
+        plt.grid(True)
+        plt.savefig(str(savefilename)+'.png', dpi=300)
 
     handle.close()
-    tags.close()
-
     
-def plot_j_usage( handle, chain="beta", savefilename="Jusage", order="frequency"):
+def plot_j_usage( handle, chain, species, savefilename="Jusage"):
 
     ## PLOTS J GENE USAGE BASED ON A FILE OF CLASSIFIERS
     
@@ -272,258 +218,204 @@ def plot_j_usage( handle, chain="beta", savefilename="Jusage", order="frequency"
     import string
     import decimal as dec
     from operator import itemgetter, attrgetter
+    
+    if species == 'human':
+
+        tags_ja = open("humantags_traj.txt", "rU")
+        num_genes_ja = 0
+        gene_list_ja = []
+        for line in tags_ja:
+            num_genes_ja += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_ja.append(x)
+        tags_ja.close()
+        
+        tags_jb = open("humantags_trbj.txt", "rU")
+        num_genes_jb = 0
+        gene_list_jb = []
+        for line in tags_jb:
+            num_genes_jb += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_jb.append(x)
+        tags_jb.close()
+        
+        tags_jg = open("humantags_trgj.txt", "rU")
+        num_genes_jg = 0
+        gene_list_jg = []
+        for line in tags_jg:
+            num_genes_jg += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_jg.append(x)
+        tags_jg.close()
+        
+        tags_jd = open("humantags_trdj.txt", "rU")
+        num_genes_jd = 0
+        gene_list_jd = []
+        for line in tags_jd:
+            num_genes_jd += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_jd.append(x)
+        tags_jd.close()
+        
+    elif species == 'mouse':
+
+        tags_ja = open("mousetags_traj.txt", "rU")
+        num_genes_ja = 0
+        gene_list_ja = []
+        for line in tags_ja:
+            num_genes_ja += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_ja.append(x)
+        tags_ja.close()
+        
+        tags_jb = open("mousetags_trbj.txt", "rU")
+        num_genes_jb = 0
+        gene_list_jb = []
+        for line in tags_jb:
+            num_genes_jb += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_jb.append(x)
+        tags_jb.close()
+        
+        tags_jg = open("mousetags_trgj.txt", "rU")
+        num_genes_jg = 0
+        gene_list_jg = []
+        for line in tags_jg:
+            num_genes_jg += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_jg.append(x)
+        tags_jg.close()
+        
+        tags_jd = open("mousetags_trdj.txt", "rU")
+        num_genes_jd = 0
+        gene_list_jd = []
+        for line in tags_jd:
+            num_genes_jd += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_jd.append(x)
+        tags_jd.close()
 
     if chain=="alpha":
-        
-        tags = open("tags_traj.txt", "rU")
-        num_genes = 0
-        for line in tags:
-            num_genes += 1
-
-        freq_vector_j = [0]*num_genes
+           
+        freq_vector_j = [0]*num_genes_ja
         for line in handle:
             elements = line.rstrip("\n")
             freq_vector_j[int(elements.split(',')[1])] += 1
             
-        if order=="frequency":
-            plt.rcParams['figure.figsize'] = 10,10
-            total = sum(freq_vector_j)
-            percent_usage_j = [0]*num_genes
-            for i in range(num_genes):
-                percent_usage_j[i] = dec.Decimal(freq_vector_j[i]) / dec.Decimal(total)
-            gene_list_j = ('J10','J11','J12','J13','J14','J15','J16','J17','J18','J20','J21','J22','J23','J24','J26','J27','J28','J29','J3','J30','J31','J32','J33','J34','J36','J37','J38','J39','J4','J40','J41','J42','J43','J44','J45','J46','J47','J48','J49','J5','J50','J52','J53','J54','J56','J57','J6','J7','J8','J9')
-            j_linked = [0]*len(percent_usage_j)
-            for i in range(len(percent_usage_j)):
-                j_linked[i] = (gene_list_j[i], percent_usage_j[i])
-            sorted_j = sorted(j_linked, key=itemgetter(1))
-            j_labels = [0]*len(sorted_j)
-            j_percents = [0]*len(sorted_j)
-            for j in range(len(sorted_j)):
-                j_labels[j] = sorted_j[j][0]
-                j_percents[j] = sorted_j[j][1]
-            pos_j = np.arange(num_genes)+ 1
-            plt.figure()
-            plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
-            plt.yticks( pos_j, j_labels)
-            plt.xlabel('Frequency Usage')
-            plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
-            plt.grid(True)
-            plt.savefig(str(savefilename)+'.png', dpi=300)
-
-        elif order=="chromosome":
-            total = sum(freq_vector_j)
-            fj = [0]*num_genes
-            for i in range(num_genes):
-                fj[i] = dec.Decimal(freq_vector_j[i]) / dec.Decimal(total)
-            gene_list_j = ('J10','J11','J12','J13','J14','J15','J16','J17','J18','J20','J21','J22','J23','J24','J26','J27','J28','J29','J3','J30','J31','J32','J33','J34','J36','J37','J38','J39','J4','J40','J41','J42','J43','J44','J45','J46','J47','J48','J49','J5','J50','J52','J53','J54','J56','J57','J6','J7','J8','J9')
-            chromosome_order = [45,44,43,42,41,40,38,37,36,35,34,33,32,31,30,29,27,26,25,24,23,22,21,20,19,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0,49,48,47,46,39,28,18]
-            gene_list_j = [ gene_list_j[i] for i in chromosome_order]
-            fj = [fj[i] for i in chromosome_order]
-            
-            ind = np.arange(num_genes)
-            width = 0.25
-
-            fig = plt.figure()
-            ax = fig.add_subplot(111)
-            rects1 = ax.bar(ind, fj, width, color='red')
-
-            ax.set_ylabel('Frequency', fontsize = 10)
-            ax.set_xticks(ind+width)
-            ax.set_xticklabels(gene_list_j)
-            plt.setp(ax.get_xticklabels(),rotation='vertical',fontsize = 6)
-            plt.setp(ax.get_yticklabels(),rotation='horizontal',fontsize = 6)
-            plt.grid(True)
-
-            plt.savefig(str(savefilename)+'.png', dpi=300)
-
+        plt.rcParams['figure.figsize'] = 10,10
+        total = sum(freq_vector_j)
+        percent_usage_j = [0]*num_genes_ja
+        for i in range(num_genes_ja):
+            percent_usage_j[i] = dec.Decimal(freq_vector_j[i]) / dec.Decimal(total)
+        j_linked = [0]*len(percent_usage_j)
+        for i in range(len(percent_usage_j)):
+            j_linked[i] = (gene_list_ja[i], percent_usage_j[i])
+        sorted_j = sorted(j_linked, key=itemgetter(1))
+        j_labels = [0]*len(sorted_j)
+        j_percents = [0]*len(sorted_j)
+        for j in range(len(sorted_j)):
+            j_labels[j] = sorted_j[j][0]
+            j_percents[j] = sorted_j[j][1]
+        pos_j = np.arange(num_genes_ja)+ 1
+        plt.figure()
+        plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
+        plt.yticks( pos_j, j_labels)
+        plt.xlabel('Frequency Usage')
+        plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
+        plt.grid(True)
+        plt.savefig(str(savefilename)+'.png', dpi=300)
+        
     if chain=="beta":
         
-        tags = open("tags_trbj.txt", "rU")
-        num_genes = 0
-        for line in tags:
-            num_genes += 1
-
-        freq_vector_j = [0]*num_genes
+        freq_vector_j = [0]*num_genes_jb
         for line in handle:
             elements = line.rstrip("\n")
             freq_vector_j[int(elements.split(',')[1])] += 1
-            
-        if order=="frequency":
-            plt.rcParams['figure.figsize'] = 10,10
-            total = sum(freq_vector_j)
-            percent_usage_j = [0]*num_genes
-            for i in range(num_genes):
-                percent_usage_j[i] = dec.Decimal(freq_vector_j[i]) / dec.Decimal(total)
-            gene_list_j = ('J1-1', 'J1-2', 'J1-3', 'J1-4', 'J1-5', 'J1-6', 'J2-1', 'J2-2', 'J2-3', 'J2-4', 'J2-5', 'J2-6', 'J2-7')
-            j_linked = [0]*len(percent_usage_j)
-            for i in range(len(percent_usage_j)):
-                j_linked[i] = (gene_list_j[i], percent_usage_j[i])
-            sorted_j = sorted(j_linked, key=itemgetter(1))
-            j_labels = [0]*len(sorted_j)
-            j_percents = [0]*len(sorted_j)
-            for j in range(len(sorted_j)):
-                j_labels[j] = sorted_j[j][0]
-                j_percents[j] = sorted_j[j][1]
-            pos_j = np.arange(num_genes)+ 1
-            plt.figure()
-            plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
-            plt.yticks( pos_j, j_labels)
-            plt.xlabel('Frequency Usage')
-            plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
-            plt.grid(True)
-            plt.savefig(str(savefilename)+'.png', dpi=300)
 
-        elif order=="chromosome":
-            total = sum(freq_vector_j)
-            fj = [0]*num_genes
-            for i in range(num_genes):
-                fj[i] = dec.Decimal(freq_vector_j[i]) / dec.Decimal(total)
-            gene_list_j = ('J1-1', 'J1-2', 'J1-3', 'J1-4', 'J1-5', 'J1-6', 'J2-1', 'J2-2', 'J2-3', 'J2-4', 'J2-5', 'J2-6', 'J2-7')
-            
-            ind = np.arange(num_genes)
-            width = 0.25
-
-            fig = plt.figure()
-            ax = fig.add_subplot(111)
-            rects1 = ax.bar(ind, fj, width, color='red')
-
-            ax.set_ylabel('Frequency', fontsize = 10)
-            ax.set_xticks(ind+width)
-            ax.set_xticklabels(gene_list_j)
-            plt.setp(ax.get_xticklabels(),rotation='vertical',fontsize = 6)
-            plt.setp(ax.get_yticklabels(),rotation='horizontal',fontsize = 6)
-            plt.grid(True)
-
-            plt.savefig(str(savefilename)+'.png', dpi=300)
-
+        plt.rcParams['figure.figsize'] = 10,10
+        total = sum(freq_vector_j)
+        percent_usage_j = [0]*num_genes_jb
+        for i in range(num_genes_jb):
+            percent_usage_j[i] = dec.Decimal(freq_vector_j[i]) / dec.Decimal(total)
+        j_linked = [0]*len(percent_usage_j)
+        for i in range(len(percent_usage_j)):
+            j_linked[i] = (gene_list_jb[i], percent_usage_j[i])
+        sorted_j = sorted(j_linked, key=itemgetter(1))
+        j_labels = [0]*len(sorted_j)
+        j_percents = [0]*len(sorted_j)
+        for j in range(len(sorted_j)):
+            j_labels[j] = sorted_j[j][0]
+            j_percents[j] = sorted_j[j][1]
+        pos_j = np.arange(num_genes_jb)+ 1
+        plt.figure()
+        plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
+        plt.yticks( pos_j, j_labels)
+        plt.xlabel('Frequency Usage')
+        plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
+        plt.grid(True)
+        plt.savefig(str(savefilename)+'.png', dpi=300)
+        
     if chain=="gamma":
-         
-        tags = open("tags_trgj.txt", "rU")
-        num_genes = 0
-        for line in tags:
-            num_genes += 1
 
-        freq_vector_j = [0]*num_genes
+        freq_vector_j = [0]*num_genes_jg
         for line in handle:
             elements = line.rstrip("\n")
             freq_vector_j[int(elements.split(',')[1])] += 1
             
-        if order=="frequency":
-            plt.rcParams['figure.figsize'] = 10,10
-            total = sum(freq_vector_j)
-            percent_usage_j = [0]*num_genes
-            for i in range(num_genes):
-                percent_usage_j[i] = dec.Decimal(freq_vector_j[i]) / dec.Decimal(total)
-            gene_list_j = ('J1','J2','JP','JP1','JP2')
-            j_linked = [0]*len(percent_usage_j)
-            for i in range(len(percent_usage_j)):
-                j_linked[i] = (gene_list_j[i], percent_usage_j[i])
-            sorted_j = sorted(j_linked, key=itemgetter(1))
-            j_labels = [0]*len(sorted_j)
-            j_percents = [0]*len(sorted_j)
-            for j in range(len(sorted_j)):
-                j_labels[j] = sorted_j[j][0]
-                j_percents[j] = sorted_j[j][1]
-            pos_j = np.arange(num_genes)+ 1
-            plt.figure()
-            plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
-            plt.yticks( pos_j, j_labels)
-            plt.xlabel('Frequency Usage')
-            plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
-            plt.grid(True)
-            plt.savefig(str(savefilename)+'.png', dpi=300)
-
-        elif order=="chromosome":
-            total = sum(freq_vector_j)
-            fj = [0]*num_genes
-            for i in range(num_genes):
-                fj[i] = dec.Decimal(freq_vector_j[i]) / dec.Decimal(total)
-            gene_list_j = ('J1','J2','JP','JP1','JP2')
-            chromosome_order = [3,2,0,4,1]
-            gene_list_j = [ gene_list_j[i] for i in chromosome_order]
-            fj = [fj[i] for i in chromosome_order]
-            
-            ind = np.arange(num_genes)
-            width = 0.25
-
-            fig = plt.figure()
-            ax = fig.add_subplot(111)
-            rects1 = ax.bar(ind, fj, width, color='red')
-
-            ax.set_ylabel('Frequency', fontsize = 10)
-            ax.set_xticks(ind+width)
-            ax.set_xticklabels(gene_list_j)
-            plt.setp(ax.get_xticklabels(),rotation='vertical',fontsize = 6)
-            plt.setp(ax.get_yticklabels(),rotation='horizontal',fontsize = 6)
-            plt.grid(True)
-
-            plt.savefig(str(savefilename)+'.png', dpi=300)
-
+        plt.rcParams['figure.figsize'] = 10,10
+        total = sum(freq_vector_j)
+        percent_usage_j = [0]*num_genes_jg
+        for i in range(num_genes_jg):
+            percent_usage_j[i] = dec.Decimal(freq_vector_j[i]) / dec.Decimal(total)
+        j_linked = [0]*len(percent_usage_j)
+        for i in range(len(percent_usage_j)):
+            j_linked[i] = (gene_list_jg[i], percent_usage_j[i])
+        sorted_j = sorted(j_linked, key=itemgetter(1))
+        j_labels = [0]*len(sorted_j)
+        j_percents = [0]*len(sorted_j)
+        for j in range(len(sorted_j)):
+            j_labels[j] = sorted_j[j][0]
+            j_percents[j] = sorted_j[j][1]
+        pos_j = np.arange(num_genes_jg)+ 1
+        plt.figure()
+        plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
+        plt.yticks( pos_j, j_labels)
+        plt.xlabel('Frequency Usage')
+        plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
+        plt.grid(True)
+        plt.savefig(str(savefilename)+'.png', dpi=300)
+        
     if chain=="delta":
-         
-        tags = open("tags_trdj.txt", "rU")
-        num_genes = 0
-        for line in tags:
-            num_genes += 1
-
-        freq_vector_j = [0]*num_genes
+        
+        freq_vector_j = [0]*num_genes_jd
         for line in handle:
             elements = line.rstrip("\n")
             freq_vector_j[int(elements.split(',')[1])] += 1
             
-        if order=="frequency":
-            plt.rcParams['figure.figsize'] = 10,10
-            total = sum(freq_vector_j)
-            percent_usage_j = [0]*num_genes
-            for i in range(num_genes):
-                percent_usage_j[i] = dec.Decimal(freq_vector_j[i]) / dec.Decimal(total)
-            gene_list_j = ('J1','J2','J3','J4')
-            j_linked = [0]*len(percent_usage_j)
-            for i in range(len(percent_usage_j)):
-                j_linked[i] = (gene_list_j[i], percent_usage_j[i])
-            sorted_j = sorted(j_linked, key=itemgetter(1))
-            j_labels = [0]*len(sorted_j)
-            j_percents = [0]*len(sorted_j)
-            for j in range(len(sorted_j)):
-                j_labels[j] = sorted_j[j][0]
-                j_percents[j] = sorted_j[j][1]
-            pos_j = np.arange(num_genes)+ 1
-            plt.figure()
-            plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
-            plt.yticks( pos_j, j_labels)
-            plt.xlabel('Frequency Usage')
-            plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
-            plt.grid(True)
-            plt.savefig(str(savefilename)+'.png', dpi=300)
-
-        elif order=="chromosome":
-            total = sum(freq_vector_j)
-            fj = [0]*num_genes
-            for i in range(num_genes):
-                fj[i] = dec.Decimal(freq_vector_j[i]) / dec.Decimal(total)
-            gene_list_j = ('J1','J2','J3','J4')
-            chromosome_order = [0,3,1,2]
-            gene_list_j = [ gene_list_j[i] for i in chromosome_order]
-            fj = [fj[i] for i in chromosome_order]
-            
-            ind = np.arange(num_genes)
-            width = 0.25
-
-            fig = plt.figure()
-            ax = fig.add_subplot(111)
-            rects1 = ax.bar(ind, fj, width, color='red')
-
-            ax.set_ylabel('Frequency', fontsize = 10)
-            ax.set_xticks(ind+width)
-            ax.set_xticklabels(gene_list_j)
-            plt.setp(ax.get_xticklabels(),rotation='vertical',fontsize = 6)
-            plt.setp(ax.get_yticklabels(),rotation='horizontal',fontsize = 6)
-            plt.grid(True)
-
-            plt.savefig(str(savefilename)+'.png', dpi=300)
-
+        plt.rcParams['figure.figsize'] = 10,10
+        total = sum(freq_vector_j)
+        percent_usage_j = [0]*num_genes_jd
+        for i in range(num_genes_jd):
+            percent_usage_j[i] = dec.Decimal(freq_vector_j[i]) / dec.Decimal(total)
+        j_linked = [0]*len(percent_usage_j)
+        for i in range(len(percent_usage_j)):
+            j_linked[i] = (gene_list_jd[i], percent_usage_j[i])
+        sorted_j = sorted(j_linked, key=itemgetter(1))
+        j_labels = [0]*len(sorted_j)
+        j_percents = [0]*len(sorted_j)
+        for j in range(len(sorted_j)):
+            j_labels[j] = sorted_j[j][0]
+            j_percents[j] = sorted_j[j][1]
+        pos_j = np.arange(num_genes_jd)+ 1
+        plt.figure()
+        plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
+        plt.yticks( pos_j, j_labels)
+        plt.xlabel('Frequency Usage')
+        plt.barh( pos_j, j_percents, align = 'center', color = 'red', height=0.2)
+        plt.grid(True)
+        plt.savefig(str(savefilename)+'.png', dpi=300)
+        
     handle.close()
-    tags.close()
 
 def plot_del_v( handle, savefilename="Vdels"):
 
@@ -599,7 +491,7 @@ def plot_del_j( handle, savefilename="Jdels"):
 
     handle.close()
 
-def plot_vj_joint_dist( handle, chain="beta", savefilename="VJusage" ):
+def plot_vj_joint_dist( handle, species, chain, savefilename="VJusage" ):
 
     ## PLOTS VJ JOINT GENE USAGE BASED ON A FILE OF CLASSIFIERS
     
@@ -607,21 +499,162 @@ def plot_vj_joint_dist( handle, chain="beta", savefilename="VJusage" ):
     import matplotlib.pyplot as plt
     import string
     import decimal as dec
+    
+    if species == 'human':
+
+        tags_va = open("humantags_trav.txt", "rU")
+        num_genes_va = 0
+        gene_list_va = []
+        for line in tags_va:
+            num_genes_va += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_va.append(x)
+        tags_va.close()
+        
+        tags_vb = open("humantags_trbv.txt", "rU")
+        num_genes_vb = 0
+        gene_list_vb = []
+        for line in tags_vb:
+            num_genes_vb += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_vb.append(x)
+        tags_vb.close()
+        
+        tags_vg = open("humantags_trgv.txt", "rU")
+        num_genes_vg = 0
+        gene_list_vg = []
+        for line in tags_vg:
+            num_genes_vg += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_vg.append(x)
+        tags_vg.close()
+        
+        tags_vd = open("humantags_trdv.txt", "rU")
+        num_genes_vd = 0
+        gene_list_vd = []
+        for line in tags_vd:
+            num_genes_vd += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_vd.append(x)
+        tags_vd.close()
+            
+    elif species == 'mouse':
+        
+        tags_va = open("mousetags_trav.txt", "rU")
+        num_genes_va = 0
+        gene_list_va = []
+        for line in tags_va:
+            num_genes_va += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_va.append(x)
+        tags_va.close()
+        
+        tags_vb = open("mousetags_trbv.txt", "rU")
+        num_genes_vb = 0
+        gene_list_vb = []
+        for line in tags_vb:
+            num_genes_vb += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_vb.append(x)
+        tags_vb.close()
+        
+        tags_vg = open("mousetags_trgv.txt", "rU")
+        num_genes_vg = 0
+        gene_list_vg = []
+        for line in tags_vg:
+            num_genes_vg += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_vg.append(x)
+        tags_vg.close()
+        
+        tags_vd = open("mousetags_trdv.txt", "rU")
+        num_genes_vd = 0
+        gene_list_vd = []
+        for line in tags_vd:
+            num_genes_vd += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_vd.append(x)
+        tags_vd.close()
+            
+    if species == 'human':
+
+        tags_ja = open("humantags_traj.txt", "rU")
+        num_genes_ja = 0
+        gene_list_ja = []
+        for line in tags_ja:
+            num_genes_ja += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_ja.append(x)
+        tags_ja.close()
+        
+        tags_jb = open("humantags_trbj.txt", "rU")
+        num_genes_jb = 0
+        gene_list_jb = []
+        for line in tags_jb:
+            num_genes_jb += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_jb.append(x)
+        tags_jb.close()
+        
+        tags_jg = open("humantags_trgj.txt", "rU")
+        num_genes_jg = 0
+        gene_list_jg = []
+        for line in tags_jg:
+            num_genes_jg += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_jg.append(x)
+        tags_jg.close()
+        
+        tags_jd = open("humantags_trdj.txt", "rU")
+        num_genes_jd = 0
+        gene_list_jd = []
+        for line in tags_jd:
+            num_genes_jd += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_jd.append(x)
+        tags_jd.close()
+            
+    elif species == 'mouse':
+        
+        tags_ja = open("mousetags_traj.txt", "rU")
+        num_genes_ja = 0
+        gene_list_ja = []
+        for line in tags_ja:
+            num_genes_ja += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_ja.append(x)
+        tags_ja.close()
+        
+        tags_jb = open("mousetags_trbj.txt", "rU")
+        num_genes_jb = 0
+        gene_list_jb = []
+        for line in tags_jb:
+            num_genes_jb += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_jb.append(x)
+        tags_jb.close()
+        
+        tags_jg = open("mousetags_trgj.txt", "rU")
+        num_genes_jg = 0
+        gene_list_jg = []
+        for line in tags_jg:
+            num_genes_jg += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_jg.append(x)
+        tags_jg.close()
+        
+        tags_jd = open("mousetags_trdj.txt", "rU")
+        num_genes_jd = 0
+        gene_list_jd = []
+        for line in tags_jd:
+            num_genes_jd += 1
+            x = line.split("|")[1].split("*")[0].split("/")[0]
+            gene_list_jd.append(x)
+        tags_jd.close()
         
     if chain=="alpha":
         
-        tags_v = open("tags_trav.txt", "rU")
-        tags_j = open("tags_traj.txt", "rU")
-
-        num_v = 0
-        for line in tags_v:
-            num_v += 1
-
-        num_j = 0
-        for line in tags_j:
-            num_j += 1
-        
-        joint_distribution = np.zeros((num_v,num_j))
+        joint_distribution = np.zeros((num_genes_va,num_genes_ja))
         for line in handle:
             elements = line.rstrip("\n")
 
@@ -631,18 +664,16 @@ def plot_vj_joint_dist( handle, chain="beta", savefilename="VJusage" ):
             joint_distribution[v,j] += 1
 
         joint_distribution = joint_distribution / sum(sum(joint_distribution))
-        gene_list_v = ('V1-1','V1-2','V10','V12-1','V12-2','V12-3','V13-1','V13-2','V14/D4','V16','V17','V18','V19','V2','V20','V21','V22','V23/D6','V24','V25','V26-1','V26-2','V27','V29/DV5','V3','V30','V34','V35','V36/DV7','V38-1','V38-2/DV8','V39','V4','V40','V41','V5','V6','V7','V8-1','V8-2/8-4','V8-3','V8-6','V9-1','V9-2','DV1','DV2','DV3')
-        gene_list_j = ('J10','J11','J12','J13','J14','J15','J16','J17','J18','J20','J21','J22','J23','J24','J26','J27','J28','J29','J3','J30','J31','J32','J33','J34','J36','J37','J38','J39','J4','J40','J41','J42','J43','J44','J45','J46','J47','J48','J49','J5','J50','J52','J53','J54','J56','J57','J6','J7','J8','J9')
-            
-        pos_v = np.arange(num_v)+ 1
-        pos_j = np.arange(num_j)+ 1
+     
+        pos_v = np.arange(num_genes_va)+ 1
+        pos_j = np.arange(num_genes_ja)+ 1
         
         plt.figure()
         plt.pcolor(joint_distribution)
         pos_ticks_v = pos_v-0.5
         pos_ticks_j = pos_j-0.5
-        plt.yticks( pos_ticks_v, gene_list_v)
-        plt.xticks( pos_ticks_j, gene_list_j)
+        plt.yticks( pos_ticks_v, gene_list_va)
+        plt.xticks( pos_ticks_j, gene_list_ja)
         plt.colorbar()
         plt.pcolor(joint_distribution)
         yticklabels = plt.getp(plt.gca(), 'yticklabels')
@@ -652,18 +683,8 @@ def plot_vj_joint_dist( handle, chain="beta", savefilename="VJusage" ):
         plt.savefig(str(savefilename)+'.png', dpi=300)
 
     if chain=="beta":
-        tags_v = open("tags_trbv.txt", "rU")
-        tags_j = open("tags_trbj.txt", "rU")
         
-        num_v = 0
-        for line in tags_v:
-            num_v += 1
-
-        num_j = 0
-        for line in tags_j:
-            num_j += 1
-        
-        joint_distribution = np.zeros((num_v,num_j))
+        joint_distribution = np.zeros((num_genes_vb,num_genes_jb))
         for line in handle:
             elements = line.rstrip("\n")
 
@@ -673,18 +694,16 @@ def plot_vj_joint_dist( handle, chain="beta", savefilename="VJusage" ):
             joint_distribution[v,j] += 1
 
         joint_distribution = joint_distribution / sum(sum(joint_distribution))
-        gene_list_v = ('V10-1','V10-2','V10-3','V11-1','V11-2','V11-3','V12-3/V12-4','V12-5','V13','V14','V15','V16','V18','V19','V2','V20-1','V24-1','V25-1','V27-1','V28-1','V29-1','V3-1','V30-1','V4-1','V4-2','V4-3','V5-1','V5-4','V5-5','V5-6','V5-8','V6-1','V6-4','V6-5','V6-6','V6-8','V6-9','V7-2','V7-3','V7-4','V7-6','V7-7','V7-8','V7-9','V9')
-        gene_list_j = ('J1-1','J1-2','J1-3','J1-4','J1-5','J1-6','J2-1','J2-2','J2-3','J2-4','J2-5','J2-6','J2-7')
 
-        pos_v = np.arange(num_v)+ 1
-        pos_j = np.arange(num_j)+ 1
+        pos_v = np.arange(num_genes_vb)+ 1
+        pos_j = np.arange(num_genes_jb)+ 1
         
         plt.figure()
         plt.pcolor(joint_distribution)
         pos_ticks_v = pos_v-0.5
         pos_ticks_j = pos_j-0.5
-        plt.yticks( pos_ticks_v, gene_list_v)
-        plt.xticks( pos_ticks_j, gene_list_j)
+        plt.yticks( pos_ticks_v, gene_list_vb)
+        plt.xticks( pos_ticks_j, gene_list_jb)
         plt.colorbar()
         plt.pcolor(joint_distribution)
         yticklabels = plt.getp(plt.gca(), 'yticklabels')
@@ -694,18 +713,8 @@ def plot_vj_joint_dist( handle, chain="beta", savefilename="VJusage" ):
         plt.savefig(str(savefilename)+'.png', dpi=300)
 
     if chain=="gamma":
-        tags_v = open("tags_trgv.txt", "rU")
-        tags_j = open("tags_trgj.txt", "rU")
         
-        num_v = 0
-        for line in tags_v:
-            num_v += 1
-
-        num_j = 0
-        for line in tags_j:
-            num_j += 1
-        
-        joint_distribution = np.zeros((num_v,num_j))
+        joint_distribution = np.zeros((num_genes_vg,num_genes_jg))
         for line in handle:
             elements = line.rstrip("\n")
 
@@ -715,18 +724,16 @@ def plot_vj_joint_dist( handle, chain="beta", savefilename="VJusage" ):
             joint_distribution[v,j] += 1
 
         joint_distribution = joint_distribution / sum(sum(joint_distribution))
-        gene_list_v = ('V2','V3','V4','V5','V8','V9')
-        gene_list_j = ('J1','J2','JP','JP1','JP2')
-        
-        pos_v = np.arange(num_v)+ 1
-        pos_j = np.arange(num_j)+ 1
+
+        pos_v = np.arange(num_genes_vg)+ 1
+        pos_j = np.arange(num_genes_jg)+ 1
         
         plt.figure()
         plt.pcolor(joint_distribution)
         pos_ticks_v = pos_v-0.5
         pos_ticks_j = pos_j-0.5
-        plt.yticks( pos_ticks_v, gene_list_v)
-        plt.xticks( pos_ticks_j, gene_list_j)
+        plt.yticks( pos_ticks_v, gene_list_vg)
+        plt.xticks( pos_ticks_j, gene_list_jg)
         plt.colorbar()
         plt.pcolor(joint_distribution)
         yticklabels = plt.getp(plt.gca(), 'yticklabels')
@@ -736,18 +743,8 @@ def plot_vj_joint_dist( handle, chain="beta", savefilename="VJusage" ):
         plt.savefig(str(savefilename)+'.png', dpi=300)
 
     if chain=="delta":
-        tags_v = open("tags_trdv.txt", "rU")
-        tags_j = open("tags_trdj.txt", "rU")
         
-        num_v = 0
-        for line in tags_v:
-            num_v += 1
-
-        num_j = 0
-        for line in tags_j:
-            num_j += 1
-        
-        joint_distribution = np.zeros((num_v,num_j))
+        joint_distribution = np.zeros((num_genes_vd,num_genes_jd))
         for line in handle:
             elements = line.rstrip("\n")
 
@@ -757,18 +754,16 @@ def plot_vj_joint_dist( handle, chain="beta", savefilename="VJusage" ):
             joint_distribution[v,j] += 1
 
         joint_distribution = joint_distribution / sum(sum(joint_distribution))
-        gene_list_v = ('V1','V2','V3','V4','V5','V6','V7','V8')
-        gene_list_j = ('J1','J2','J3','J4')
-        
-        pos_v = np.arange(num_v)+ 1
-        pos_j = np.arange(num_j)+ 1
+ 
+        pos_v = np.arange(num_genes_vd)+ 1
+        pos_j = np.arange(num_genes_jd)+ 1
         
         plt.figure()
         plt.pcolor(joint_distribution)
         pos_ticks_v = pos_v-0.5
         pos_ticks_j = pos_j-0.5
         plt.yticks( pos_ticks_v, gene_list_v)
-        plt.xticks( pos_ticks_j, gene_list_j)
+        plt.xticks( pos_ticks_j, gene_list_jg)
         plt.colorbar()
         plt.pcolor(joint_distribution)
         yticklabels = plt.getp(plt.gca(), 'yticklabels')
@@ -778,8 +773,6 @@ def plot_vj_joint_dist( handle, chain="beta", savefilename="VJusage" ):
         plt.savefig(str(savefilename)+'.png', dpi=300)
 
     handle.close()
-    tags_v.close()
-    tags_j.close()
 
 def plot_insert_lengths( handle, savefilename="InsertLengths" ):
 
