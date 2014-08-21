@@ -1,0 +1,44 @@
+>M12832|TRGV1*01|Mus musculus_BALB/c|F|V-REGION|148..446|299 nt|1| | | | |299+0=299| | |
+cttgggcagctggagcaaactgaattatcggtcaccagagagacagatgagagtgcgcaa
+atatcctgtatagtttctcttccatatttctccaacacagctatacattggtaccggcaa
+aaagcaaaaaagtttgagtatctaatatatgtctcaacaaactacaatcaacgaccctta
+ggagggaagaacaaaaaaattgaagcaagtaaagattttcaaacttctacctcaaccttg
+aaaataaattacttgaagaaagaagatgaagctacctactactgtgcagtctggataaa
+
+>M12831|TRGV2*01|Mus musculus_BALB/c|F|V-REGION|525..826|302 nt|1| | | | |302+0=302| | |
+cttgggcagctggagcaaactgaattatcggtcaccagagagacagatgagaatgtgcaa
+atatcctgtatagtttatcttccatatttctccaacacagctatacattggtaccggcaa
+aaaacaaatcaacagtttgagtatctaatatatgtcgcaacaaactacaatcaacgaccc
+ttaggagggaagcacaaaaaaattgaagcaagtaaagattttaaaagttctacctcaacc
+ttggaaataaattacttgaagaaagaagatgaagccacctactactgtgcagtctggatg
+ag
+
+>AF037352|TRGV4*01|Mus musculus|F|V-REGION|8460..8761|302 nt|1| | | | |302+0=302| | |
+catgggaagttggagcaacctgaaatatcaatttccagaccaagagatgagactgcacaa
+atatcctgtaaagttttcatcgaaagctttaggagtgtaaccatacactggtaccggcag
+aaaccaaaccaaggtttagagtttctattatatgtccttgcaacccctacccatattttc
+ttagataaggagtacaagaaaatggaggcaagtaaaaatcctagtgcttctacatcgata
+ttgacaatatattccttggaggaagaagacgaagctatctactactgttcctacggctaa
+ag
+
+>AF037352|TRGV5*01|Mus musculus|F|V-REGION|15678..15970|293 nt|1| | | | |293+0=293| | |
+gactcctggatatctcaggatcagctctcctttacccgaagaccaaacaagacggtgcac
+ataagttgcaagctctctggggttccccttcataacaccattgtgcactggtaccaactg
+aaagaaggggagcccctgagacgaatcttctatggctcagtcaaaacttacaaacaagac
+aagtcccactcccgcttggaaattgatgagaaggatgatggtaccttttacctgataatc
+aacaatgttgtcacatcggatgaagccacgtactactgtgcctgctgggatct
+
+>D29793|TRGV6*01|Mus musculus_C57BL/6|F|V-REGION|2057..2363|307 nt|1| | | | |307+0=307| | |
+acgagtctcacgtcacctctggggtcatatgtcatcaagaggaaaggaaatacggctttt
+ctcaaatgtcaaataaaaacaagtgttcagaagcccgatgcatacatacactggtaccaa
+gagaagccaggccagcgtctccaaagaatgctgtgtagttcttcaaaagaaaacattgtc
+tatgagaaagattttagtgacgaaagatatgaggcaaggacatggcagagtgatttgtct
+tcagtcctcaccatacaccaagtgagagaagaggacacgggaacttattactgtgcatgc
+tgggata
+
+>D29794|TRGV7*01|Mus musculus_C57BL/6|F|V-REGION|2393..2688|296 nt|1| | | | |296+0=296| | |
+tcctccaacttggaagaaagaataatgtcaatcaccaagctagaggggtcctctgctata
+atgacttgtgatactcacagaacaggcacttacatccactggtaccgattccagaaaggg
+agggccccagagcaccttctctactataacttcgtcagttccacaactgtggtggattcc
+agattcaattcagagaaatatcatgtttatgaaggcccggacaagaggtataaatttgtg
+cttcggaatgtggaggagtccgattctgctctgtactactgtgcctcctgggctgg
