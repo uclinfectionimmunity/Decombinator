@@ -468,7 +468,6 @@ def engine(rc, recid,
 
     ### Open .txt file created at the start of analysis
     stemplate = Template('$v $j $del_v $del_j $nt_insert $seqid $barcode $barqual') # Creates stemplate, a holder, for f. Each line will have the 5 variables separated by a space
-    print recid
     found_seq_match = 0
     found_v_match = 0
     found_j_match = 0
