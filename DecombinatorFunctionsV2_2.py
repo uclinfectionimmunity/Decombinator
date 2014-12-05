@@ -122,7 +122,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
 
     ### Begin analysing sequences
     
-    item = inputfile
+    item = str(inputfile)
     print 'Importing sequences from', item,'and assigning V and J regions...'
     handle = open(item, "rU")
               
@@ -215,7 +215,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
             
             if (chain == "alpha") or (chain == "all"):
                 
-                assigned_count_alpha, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record_reverse.seq), str(record_reverse.id),
+                assigned_count_alpha, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record_reverse.seq), str(record.id),
                                                                                                         seq_count, assigned_count_alpha, Nseqs,
                                                                                                         va_key, ja_key,
                                                                                                         va_seqs, ja_seqs,
@@ -232,7 +232,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
                                 
             if (chain == "beta") or (chain == "all"):
                 
-                assigned_count_beta, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record_reverse.seq), str(record_reverse.id),
+                assigned_count_beta, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record_reverse.seq), str(record.id),
                                                                                                         seq_count, assigned_count_beta, Nseqs,
                                                                                                         vb_key, jb_key,
                                                                                                         vb_seqs, jb_seqs,
@@ -249,7 +249,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
                                 
             if (chain == "gamma") or (chain == "all"):
                 
-                assigned_count_gamma, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record_reverse.seq), str(record_reverse.id),
+                assigned_count_gamma, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record_reverse.seq), str(record.id),
                                                                                                         seq_count, assigned_count_gamma, Nseqs,
                                                                                                         vg_key, jg_key,
                                                                                                         vg_seqs, jg_seqs,
@@ -266,7 +266,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
             
             if (chain == "delta") or (chain == "all"):
                 
-                assigned_count_delta, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record_reverse.seq), str(record_reverse.id),
+                assigned_count_delta, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record_reverse.seq), str(record.id),
                                                                                                         seq_count, assigned_count_delta, Nseqs,
                                                                                                         vd_key, jd_key,
                                                                                                         vd_seqs, jd_seqs,
@@ -468,7 +468,7 @@ def engine(rc, recid,
 
     ### Open .txt file created at the start of analysis
     stemplate = Template('$v $j $del_v $del_j $nt_insert $seqid $barcode $barqual') # Creates stemplate, a holder, for f. Each line will have the 5 variables separated by a space
-    
+    print recid
     found_seq_match = 0
     found_v_match = 0
     found_j_match = 0
