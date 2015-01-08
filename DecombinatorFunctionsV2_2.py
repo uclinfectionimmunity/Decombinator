@@ -128,6 +128,8 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
               
     for record in SeqIO.parse(handle, "fastq"):
         seq_count += 1
+        print seq_count
+        found_seq_match = 0
                   
         ## DETERMINE BARCODE SEQUENCE AT START OF SEQUENCE
         if barcode == True:
@@ -141,8 +143,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
         if 'N' in str(record.seq):
             Nseqs += 1
             
-        if (chain == "alpha") or (chain == "all"):
-            
+        if ((chain == "alpha") or (chain == "all")) and found_seq_match==0:
             assigned_count_alpha, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record.seq), str(record.id),
                                                                                                         seq_count, assigned_count_alpha, Nseqs,
                                                                                                         va_key, ja_key,
@@ -157,8 +158,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
                                                                                                         error0_count, error1_count,
                                                                                                         barcode_seq, barcode_qual
                                                                                                         )
-        if (chain == "beta") or (chain == "all"):
-            
+        if ((chain == "beta") or (chain == "all")) and found_seq_match==0:
             assigned_count_beta, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record.seq), str(record.id),
                                                                                                         seq_count, assigned_count_beta, Nseqs,
                                                                                                         vb_key, jb_key,
@@ -173,8 +173,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
                                                                                                         error0_count, error1_count,
                                                                                                         barcode_seq, barcode_qual
                                                                                                         )
-        if (chain == "gamma") or (chain == "all"):
-            
+        if ((chain == "gamma") or (chain == "all")) and found_seq_match==0:
             assigned_count_gamma, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record.seq), str(record.id),
                                                                                                         seq_count, assigned_count_gamma, Nseqs,
                                                                                                         vg_key, jg_key,
@@ -189,8 +188,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
                                                                                                         error0_count, error1_count,
                                                                                                         barcode_seq, barcode_qual
                                                                                                         )
-        if (chain == "delta") or (chain == "all"):
-            
+        if ((chain == "delta") or (chain == "all")) and found_seq_match==0:
             assigned_count_delta, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record.seq), str(record.id),
                                                                                                         seq_count, assigned_count_delta, Nseqs,
                                                                                                         vd_key, jd_key,
@@ -213,8 +211,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
             
             record_reverse = record.reverse_complement()
             
-            if (chain == "alpha") or (chain == "all"):
-                
+            if ((chain == "alpha") or (chain == "all")) and found_seq_match==0:
                 assigned_count_alpha, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record_reverse.seq), str(record.id),
                                                                                                         seq_count, assigned_count_alpha, Nseqs,
                                                                                                         va_key, ja_key,
@@ -230,8 +227,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
                                                                                                         barcode_seq, barcode_qual
                                                                                                         )
                                 
-            if (chain == "beta") or (chain == "all"):
-                
+            if ((chain == "beta") or (chain == "all")) and found_seq_match==0:
                 assigned_count_beta, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record_reverse.seq), str(record.id),
                                                                                                         seq_count, assigned_count_beta, Nseqs,
                                                                                                         vb_key, jb_key,
@@ -247,8 +243,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
                                                                                                         barcode_seq, barcode_qual
                                                                                                         )
                                 
-            if (chain == "gamma") or (chain == "all"):
-                
+            if ((chain == "gamma") or (chain == "all")) and found_seq_match==0:
                 assigned_count_gamma, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record_reverse.seq), str(record.id),
                                                                                                         seq_count, assigned_count_gamma, Nseqs,
                                                                                                         vg_key, jg_key,
@@ -264,8 +259,7 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
                                                                                                         barcode_seq, barcode_qual
                                                                                                         )
             
-            if (chain == "delta") or (chain == "all"):
-                
+            if ((chain == "delta") or (chain == "all")) and found_seq_match==0:
                 assigned_count_delta, seq_count, Nseqs, found_seq_match, error0_count, error1_count  = engine(str(record_reverse.seq), str(record.id),
                                                                                                         seq_count, assigned_count_delta, Nseqs,
                                                                                                         vd_key, jd_key,
@@ -296,7 +290,10 @@ def analysis( inputfile, outputfile, with_reverse_complement_search, species, ch
     print >> log_file, assigned_count_beta, 'TcR beta sequences were successfully assigned'
     print >> log_file, assigned_count_gamma, 'TcR gamma sequences were successfully assigned'
     print >> log_file, assigned_count_delta, 'TcR delta sequences were successfully assigned'
-    print >> log_file, 1-(20*error0_count+19*error1_count)/float(20*(error0_count+error1_count)), 'upper bound on sequencing error rate'
+    if error0_count+error1_count == 0:
+        print "No TcR sequences found!"
+    else:
+        print >> log_file, 1-(20*error0_count+19*error1_count)/float(20*(error0_count+error1_count)), 'upper bound on sequencing error rate'
     print >> log_file, Nseqs, 'sequences contained ambiguous N nucleotides'
     print >> log_file, 'Time taken =', timed, 'seconds'
 
@@ -472,6 +469,8 @@ def engine(rc, recid,
     found_v_match = 0
     found_j_match = 0
     
+    print len(jb_seqs)
+    
     hold_v = vb_key.findall(str(rc))
     hold_j = jb_key.findall(str(rc))
     
@@ -601,7 +600,8 @@ def get_j_deletions( rc, j_match, temp_start_j, j_regions_cut ):
     function_temp_start_j = temp_start_j
     pos = 0
     is_j_match = 0
-    while is_j_match == 0 and 0 <= function_temp_start_j+2 < len(str(rc)):
+    while is_j_match == 0 and 0 <= function_temp_start_j < len(str(rc)):
+        print function_temp_start_j, len(str(rc)), pos, j_match
         if str(j_regions_cut[j_match])[pos] == str(rc)[function_temp_start_j] and str(j_regions_cut[j_match])[pos+1] == str(rc)[function_temp_start_j+1] and str(j_regions_cut[j_match])[pos+2] == str(rc)[function_temp_start_j+2]:
             is_j_match = 1
             deletions_j = pos
