@@ -762,8 +762,8 @@ def plot_vj_joint_dist( handle, species, chain, savefilename="VJusage" ):
         plt.pcolor(joint_distribution)
         pos_ticks_v = pos_v-0.5
         pos_ticks_j = pos_j-0.5
-        plt.yticks( pos_ticks_v, gene_list_v)
-        plt.xticks( pos_ticks_j, gene_list_jg)
+        plt.yticks( pos_ticks_v, gene_list_vd)
+        plt.xticks( pos_ticks_j, gene_list_jd)
         plt.colorbar()
         plt.pcolor(joint_distribution)
         yticklabels = plt.getp(plt.gca(), 'yticklabels')
