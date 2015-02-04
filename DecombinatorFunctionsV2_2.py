@@ -601,7 +601,6 @@ def get_j_deletions( rc, j_match, temp_start_j, j_regions_cut ):
     pos = 0
     is_j_match = 0
     while is_j_match == 0 and 0 <= function_temp_start_j < len(str(rc)):
-        print function_temp_start_j, len(str(rc)), pos, j_match
         if str(j_regions_cut[j_match])[pos] == str(rc)[function_temp_start_j] and str(j_regions_cut[j_match])[pos+1] == str(rc)[function_temp_start_j+1] and str(j_regions_cut[j_match])[pos+2] == str(rc)[function_temp_start_j+2]:
             is_j_match = 1
             deletions_j = pos
