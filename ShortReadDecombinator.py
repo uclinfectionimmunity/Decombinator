@@ -176,7 +176,7 @@ def assign_by_longest_substring(substrings_found_by_gene, parameters):
     # print 'attempting assignment by longest substring'
 
     match_length_threshold = parameters[0]
-    match_length_differential = parameters[0]
+    match_length_differential = parameters[1]
 
     longest_substring_by_gene = []
     for matches in substrings_found_by_gene:
